@@ -7,7 +7,7 @@ class Product {
     String description;
     String category;
     String image;
-    Rating rating;
+    Rating? rating;
 
     Product({
         required this.id,
@@ -16,7 +16,7 @@ class Product {
         required this.description,
         required this.category,
         required this.image,
-        required this.rating,
+        this.rating,
     });
 
     Product copyWith({
@@ -49,7 +49,7 @@ class Product {
         description: json["description"],
         category: json["category"],
         image: json["image"],
-        rating: Rating.fromJson(json["rating"]),
+        rating: Rating.fromJson(json["rating"] ?? {}),
     );
 
     static List<Product> fromJsonList(List<dynamic> jsonList) {
@@ -63,13 +63,13 @@ class Product {
         "description": description,
         "category": category,
         "image": image,
-        "rating": rating.toJson(),
+        "rating": rating?.toJson(),
     };
 }
 
 class Rating {
-    double rate;
-    int count;
+    double? rate;
+    int? count;
 
     Rating({
         required this.rate,
