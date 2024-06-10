@@ -4,7 +4,7 @@ class Cart {
     int id;
     int userId;
     DateTime date;
-    List<Product> products;
+    List<ProductCart> products;
     int v;
 
     Cart({
@@ -19,7 +19,7 @@ class Cart {
         int? id,
         int? userId,
         DateTime? date,
-        List<Product>? products,
+        List<ProductCart>? products,
         int? v,
     }) => 
         Cart(
@@ -30,15 +30,19 @@ class Cart {
             v: v ?? this.v,
         );
 
-    factory Cart.fromJson(String str) => Cart.fromMap(json.decode(str));
+    factory Cart.fromJson(str) => Cart.fromMap(str);
 
     String toJson() => json.encode(toMap());
 
-    factory Cart.fromMap(Map<String, dynamic> json) => Cart(
+    static List<Cart> fromJsonList(List<dynamic> jsonList) {
+      return jsonList.map((json) => Cart.fromJson(json)).toList();
+    }
+
+    factory Cart.fromMap(json) => Cart(
         id: json["id"],
         userId: json["userId"],
         date: DateTime.parse(json["date"]),
-        products: List<Product>.from(json["products"].map((x) => Product.fromMap(x))),
+        products: List<ProductCart>.from(json["products"].map((x) => ProductCart.fromMap(x))),
         v: json["__v"],
     );
 
@@ -51,29 +55,29 @@ class Cart {
     };
 }
 
-class Product {
+class ProductCart {
     int productId;
     int quantity;
 
-    Product({
+    ProductCart({
         required this.productId,
         required this.quantity,
     });
 
-    Product copyWith({
+    ProductCart copyWith({
         int? productId,
         int? quantity,
     }) => 
-        Product(
+        ProductCart(
             productId: productId ?? this.productId,
             quantity: quantity ?? this.quantity,
         );
 
-    factory Product.fromJson(String str) => Product.fromMap(json.decode(str));
+    factory ProductCart.fromJson(String str) => ProductCart.fromMap(json.decode(str));
 
     String toJson() => json.encode(toMap());
 
-    factory Product.fromMap(Map<String, dynamic> json) => Product(
+    factory ProductCart.fromMap(Map<String, dynamic> json) => ProductCart(
         productId: json["productId"],
         quantity: json["quantity"],
     );
