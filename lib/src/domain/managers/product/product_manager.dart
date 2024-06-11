@@ -35,8 +35,8 @@ class ProductManager {
     return productsEither.fold((l) => throw ProductApiException(l.message), (r) => r);
   }
 
-  Future<Product> getOne(int userId) async {
-    final productsEither = await _getOneProductUseCase(userId);
+  Future<Product> getOne(int productId) async {
+    final productsEither = await _getOneProductUseCase(productId);
     return productsEither.fold((l) => throw ProductApiException(l.message), (r) => r);
   }
 
