@@ -7,9 +7,9 @@ import 'package:api_fake_storage_orm/src/domain/managers/product/product_manager
 import 'package:api_fake_storage_orm/src/domain/managers/users/user_manager.dart';
 
 // export modules
-export './src/domain/models/product.dart' show Product, Rating;
-export './src/domain/models/cart.dart' show Cart, ProductCart;
-export './src/domain/models/user.dart' show User, Name, Address, Geolocation;
+export 'src/domain/models/product_model.dart' show ProductModel, Rating;
+export 'src/domain/models/cart_model.dart' show CartModel, ProductCart;
+export 'src/domain/models/user_model.dart' show UserModel, Name, Address, Geolocation;
 
 // export utils
 

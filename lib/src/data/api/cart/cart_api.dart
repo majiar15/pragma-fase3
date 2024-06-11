@@ -7,7 +7,7 @@ import 'package:api_fake_storage_orm/src/common/config/environment.dart';
 import 'package:api_fake_storage_orm/src/common/utils/formatted_date.dart';
 import 'package:api_fake_storage_orm/src/data/api/cart/error/cart_exception.dart';
 import 'package:api_fake_storage_orm/src/data/api/cart/error/cart_not_found_exception.dart';
-import 'package:api_fake_storage_orm/src/domain/models/cart.dart';
+import 'package:api_fake_storage_orm/src/domain/models/cart_model.dart';
 import 'package:api_fake_storage_orm/src/domain/repositories/cart_repository.dart';
 
 import 'package:dartz/dartz.dart';
@@ -47,7 +47,7 @@ class CartApi extends CartRepository {
   }
 
   @override
-  Future<Either<CartApiException, Cart>> deleteCart(int cartId) async {
+  Future<Either<CartApiException, CartModel>> deleteCart(int cartId) async {
     try {
       final response = await http.delete(
         Uri.parse('${Environment.apiUrl}/carts/$cartId'),
@@ -55,7 +55,7 @@ class CartApi extends CartRepository {
       );
       if (response.statusCode == 200) {
         dynamic data = json.decode(response.body);
-        Cart cart = Cart.fromJson(data);
+        CartModel cart = CartModel.fromJson(data);
         return Right(cart);
       } else {
         return Left(
@@ -68,7 +68,7 @@ class CartApi extends CartRepository {
   }
 
   @override
-  Future<Either<CartApiException, List<Cart>>> getAllCarts(Sort? sort, int? limit) async {
+  Future<Either<CartApiException, List<CartModel>>> getAllCarts(Sort? sort, int? limit) async {
     try {
       String url = '${Environment.apiUrl}/carts';
       url = AddParametersURL.addSortToUrl(url, sort);
@@ -80,7 +80,7 @@ class CartApi extends CartRepository {
       );
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-        List<Cart> carts = Cart.fromJsonList(data);
+        List<CartModel> carts = CartModel.fromJsonList(data);
         return Right(carts);
       } else {
         return Left(
@@ -93,7 +93,7 @@ class CartApi extends CartRepository {
   }
 
   @override
-  Future<Either<CartApiException, Cart>> getCartById(int cartId) async {
+  Future<Either<CartApiException, CartModel>> getCartById(int cartId) async {
     try {
       final response = await http.get(
         Uri.parse('${Environment.apiUrl}/carts/$cartId'),
@@ -101,7 +101,7 @@ class CartApi extends CartRepository {
       );
       if (response.statusCode == 200) {
         dynamic data = json.decode(response.body);
-        Cart cart = Cart.fromJson(data);
+        CartModel cart = CartModel.fromJson(data);
         return Right(cart);
       } else {
         return Left(
@@ -114,7 +114,7 @@ class CartApi extends CartRepository {
   }
 
   @override
-  Future<Either<CartApiException, Cart>> getCartByUserId(int userId) async {
+  Future<Either<CartApiException, CartModel>> getCartByUserId(int userId) async {
     try {
       final response = await http.get(
         Uri.parse('${Environment.apiUrl}/carts/user/$userId'),
@@ -122,7 +122,7 @@ class CartApi extends CartRepository {
       );
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-        Cart cart = Cart.fromJsonList(data)[0];
+        CartModel cart = CartModel.fromJsonList(data)[0];
         return Right(cart);
       } else {
         return Left(

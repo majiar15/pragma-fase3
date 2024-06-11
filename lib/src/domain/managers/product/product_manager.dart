@@ -1,61 +1,46 @@
 import 'package:api_fake_storage_orm/src/common/enum/sort.dart';
 import 'package:api_fake_storage_orm/src/data/api/product/errors/product_exception.dart';
 import 'package:api_fake_storage_orm/src/data/api/product/product_api.dart';
-import 'package:api_fake_storage_orm/src/domain/models/product.dart';
+import 'package:api_fake_storage_orm/src/domain/models/product_model.dart';
 import 'package:api_fake_storage_orm/src/domain/repositories/product_repository.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/product/add_product_use_case.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/product/delete_product_use_case.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/product/get_all_products_use_case.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/product/get_one_product_use_case.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/product/get_products_by_category_use_case.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/product/update_product_use_case.dart';
+import 'package:api_fake_storage_orm/src/domain/use_cases/product/product_use_case.dart';
 import 'package:dartz/dartz.dart';
 
 class ProductManager {
   final ProductRepository _productRepository = ProductApi();
-  late final GetAllProductsUseCase _getAllProductsUseCase;
-  late final GetOneProductUseCase _getOneProductUseCase;
-  late final GetProductsByCategoryUseCase _getProductsByCategoryUseCase;
+  late final ProductUseCase _productUseCase;
 
-  late final AddProductUseCase _addProductUseCase;
-  late final DeleteProductUseCase _deleteProductUseCase;
-  late final UpdateProductUseCase _updateProductUseCase;
 
   ProductManager() {
-    _getAllProductsUseCase = GetAllProductsUseCase(_productRepository);
-    _getOneProductUseCase = GetOneProductUseCase(_productRepository);
-    _getProductsByCategoryUseCase = GetProductsByCategoryUseCase(_productRepository);
-    _addProductUseCase = AddProductUseCase(_productRepository);
-    _deleteProductUseCase = DeleteProductUseCase(_productRepository);
-    _updateProductUseCase = UpdateProductUseCase(_productRepository);
+    _productUseCase = ProductUseCase(_productRepository);
   }
 
-  Future<List<Product>> getAll({Sort? sort, int? limit}) async {
-    final productsEither = await _getAllProductsUseCase(sort, limit);
+  Future<List<ProductModel>> getAll({Sort? sort, int? limit}) async {
+    final productsEither = await _productUseCase.getAll(sort, limit);
     return productsEither.fold((l) => throw ProductApiException(l.message), (r) => r);
   }
 
-  Future<Product> getOne(int productId) async {
-    final productsEither = await _getOneProductUseCase(productId);
+  Future<ProductModel> getOne(int productId) async {
+    final productsEither = await _productUseCase.getOne(productId);
     return productsEither.fold((l) => throw ProductApiException(l.message), (r) => r);
   }
 
-  Future<List<Product>> getByCategory(String category) async {
-    final productsEither = await _getProductsByCategoryUseCase(category);
+  Future<List<ProductModel>> getByCategory(String category) async {
+    final productsEither = await _productUseCase.getByCategory(category);
     return productsEither.fold((l) => throw ProductApiException(l.message), (r) => r);
   }
-  Future<Product> create(Product product) async {
-    final productsEither = await _addProductUseCase(product);
-    return productsEither.fold((l) => throw ProductApiException(l.message), (r) => r);
-  }
-
-  Future<Product> delete(int productId) async {
-    final productsEither = await _deleteProductUseCase(productId);
+  Future<ProductModel> create(ProductModel product) async {
+    final productsEither = await _productUseCase.addProduct(product);
     return productsEither.fold((l) => throw ProductApiException(l.message), (r) => r);
   }
 
-  Future<Product> update(Product product) async {
-    final productsEither = await _updateProductUseCase(product);
+  Future<ProductModel> delete(int productId) async {
+    final productsEither = await _productUseCase.deleteProduct(productId);
+    return productsEither.fold((l) => throw ProductApiException(l.message), (r) => r);
+  }
+
+  Future<ProductModel> update(ProductModel product) async {
+    final productsEither = await _productUseCase.updateProduct(product);
     return productsEither.fold((l) => throw ProductApiException(l.message), (r) => r);
   }
 

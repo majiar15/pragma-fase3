@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class User {
+class UserModel {
     Address address;
     int id;
     String email;
@@ -10,7 +10,7 @@ class User {
     String phone;
     int v;
 
-    User({
+    UserModel({
         required this.address,
         required this.id,
         required this.email,
@@ -21,7 +21,7 @@ class User {
         required this.v,
     });
 
-    User copyWith({
+    UserModel copyWith({
         Address? address,
         int? id,
         String? email,
@@ -31,7 +31,7 @@ class User {
         String? phone,
         int? v,
     }) => 
-        User(
+        UserModel(
             address: address ?? this.address,
             id: id ?? this.id,
             email: email ?? this.email,
@@ -42,15 +42,15 @@ class User {
             v: v ?? this.v,
         );
 
-    factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
+    factory UserModel.fromRawJson(String str) => UserModel.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    static List<User> fromJsonList(List<dynamic> jsonList) {
-      return jsonList.map((json) => User.fromJson(json)).toList();
+    static List<UserModel> fromJsonList(List<dynamic> jsonList) {
+      return jsonList.map((json) => UserModel.fromJson(json)).toList();
     }
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
+    factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         address: Address.fromJson(json["address"]),
         id: json["id"],
         email: json["email"],

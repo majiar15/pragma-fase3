@@ -8,14 +8,14 @@ import 'package:api_fake_storage_orm/src/data/api/product/errors/product_not_fou
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../domain/models/product.dart';
+import '../../../domain/models/product_model.dart';
 import '../../../domain/repositories/product_repository.dart';
 
 class ProductApi extends ProductRepository {
   final headers = {'Content-Type': 'application/json'};
 
   @override
-  Future<Either<ProductApiException, List<Product>>> getAllProducts(Sort? sort, int? limit) async {
+  Future<Either<ProductApiException, List<ProductModel>>> getAllProducts(Sort? sort, int? limit) async {
     try {
       String url = '${Environment.apiUrl}/products';
       url = AddParametersURL.addSortToUrl(url, sort);
@@ -25,7 +25,7 @@ class ProductApi extends ProductRepository {
           .get(Uri.parse(url), headers: headers);
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-        List<Product> products = Product.fromJsonList(data);
+        List<ProductModel> products = ProductModel.fromJsonList(data);
         return Right(products);
       } else {
         return Left(
@@ -39,14 +39,14 @@ class ProductApi extends ProductRepository {
   }
 
   @override
-  Future<Either<ProductApiException, Product>> getProductById(int id) async {
+  Future<Either<ProductApiException, ProductModel>> getProductById(int id) async {
     try {
       final response = await http.get(
           Uri.parse('https://fakestoreapi.com/products/$id'),
           headers: headers);
       if (response.statusCode == 200) {
         dynamic data = json.decode(response.body);
-        Product products = Product.fromJson(data);
+        ProductModel products = ProductModel.fromJson(data);
         return Right(products);
       } else {
         return Left(
@@ -59,8 +59,8 @@ class ProductApi extends ProductRepository {
   }
 
   @override
-  Future<Either<ProductApiException, Product>> addProduct(
-      Product product) async {
+  Future<Either<ProductApiException, ProductModel>> addProduct(
+      ProductModel product) async {
     try {
       final body = jsonEncode(product);
       final response = await http.post(
@@ -69,7 +69,7 @@ class ProductApi extends ProductRepository {
           body: body);
       if (response.statusCode == 200) {
         dynamic data = json.decode(response.body);
-        Product product = Product.fromJson(data);
+        ProductModel product = ProductModel.fromJson(data);
         return Right(product);
       } else {
         return Left(
@@ -83,7 +83,7 @@ class ProductApi extends ProductRepository {
   }
 
   @override
-  Future<Either<ProductApiException, Product>> deleteProduct(
+  Future<Either<ProductApiException, ProductModel>> deleteProduct(
     int productId,
   ) async {
     try {
@@ -92,7 +92,7 @@ class ProductApi extends ProductRepository {
           headers: headers);
       if (response.statusCode == 200) {
         dynamic data = json.decode(response.body);
-        Product product = Product.fromJson(data);
+        ProductModel product = ProductModel.fromJson(data);
         return Right(product);
       } else {
         return Left(
@@ -105,7 +105,7 @@ class ProductApi extends ProductRepository {
   }
 
   @override
-  Future<Either<ProductApiException, List<Product>>> getProductByCategory(
+  Future<Either<ProductApiException, List<ProductModel>>> getProductByCategory(
     String category,
   ) async {
     try {
@@ -114,7 +114,7 @@ class ProductApi extends ProductRepository {
           headers: headers);
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-        List<Product> products = Product.fromJsonList(data);
+        List<ProductModel> products = ProductModel.fromJsonList(data);
         return Right(products);
       } else {
         return Left(
@@ -128,8 +128,8 @@ class ProductApi extends ProductRepository {
   }
 
   @override
-  Future<Either<ProductApiException, Product>> updateProduct(
-    Product product,
+  Future<Either<ProductApiException, ProductModel>> updateProduct(
+    ProductModel product,
   ) async {
     try {
       final body = jsonEncode(product);
@@ -140,7 +140,7 @@ class ProductApi extends ProductRepository {
 
       if (response.statusCode == 200) {
         dynamic data = json.decode(response.body);
-        Product products = Product.fromJson(data);
+        ProductModel products = ProductModel.fromJson(data);
         return Right(products);
       } else {
         return Left(
