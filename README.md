@@ -1,39 +1,67 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Fake Storage ORM
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Fake Storage ORM es un paquete ORM (Object-Relational Mapping) para Flutter que facilita la interacción con la API Fake Storage. Este paquete proporciona una manera sencilla y eficiente de realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) en los datos almacenados en la API Fake Storage.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- **Fácil de usar**: Interfaz intuitiva para realizar operaciones CRUD.
+- **Alta eficiencia**: Optimizado para un rendimiento rápido y eficiente.
+- **Integración perfecta**: Se integra perfectamente con tu aplicación Flutter.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
 
-## Usage
+### Instalación
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```bash
+flutter pub add api_fake_storage_orm
 ```
 
-## Additional information
+### Ejemplo
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```dart
+import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
+
+void main() async {
+  final client = ApiFakeStorageORM();
+
+  try {
+
+    final result = await client.user.getAll(limit: 3, sort: Sort.asc);
+    print(result);
+  } catch (e) {
+    print(e);
+  }
+}
+```
+
+### Recursos y metodos disponibles
+
+- product
+    - Future<List<Product>> getAll({Sort? sort, int? limit})
+    - Future<Product> getOne(int userId)
+    - Future<List<Product>> getByCategory(String category)
+    - Future<Product> create(Product product)
+    - Future<Product> update(Product product)
+    - Future<Product> delete(int productId)
+- user
+    - Future<List<User>> getAll({Sort? sort, int? limit})
+    - Future<User> getOne(int userId)
+    - Future<int> create(User user)
+    - Future<User> delete(int userId)
+    - Future<User> update(User user)
+- cart
+    - Future<List<Cart>> getAll({Sort? sort, int? limit})
+    - Future<Cart> getOne(int cartId)
+    - Future<Cart> getOneByUser(int userId)
+    - Future<int> create(int userId, List<ProductCart> products)
+    - Future<Cart> delete(int cartId)
+    -  Future<int> update( int cartId, int userId,List<ProductCart> products,)
+- auth
+    - Future<String> login(String userName, String password)
+- category
+    - Future<List<String>> getAll()
+
+
+para mas informacion consultar 
+[Api Fake Storage](https://fakestoreapi.com/docs) 
