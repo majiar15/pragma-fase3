@@ -8,14 +8,14 @@ import 'package:api_fake_storage_orm/src/data/api/user/error/user_not_found_exce
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../domain/models/user.dart';
+import '../../../domain/models/user_model.dart';
 import '../../../domain/repositories/user_repository.dart';
 
 class UserApi extends UserRepository {
   final headers = {'Content-Type': 'application/json'};
 
   @override
-  Future<Either<UserApiException, List<User>>> getAllUsers(Sort? sort, int? limit) async {
+  Future<Either<UserApiException, List<UserModel>>> getAllUsers(Sort? sort, int? limit) async {
     try {
       String url = '${Environment.apiUrl}/users';
       url = AddParametersURL.addSortToUrl(url, sort);
@@ -27,7 +27,7 @@ class UserApi extends UserRepository {
       );
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-        List<User> users = User.fromJsonList(data);
+        List<UserModel> users = UserModel.fromJsonList(data);
         return Right(users);
       } else {
         return Left(
@@ -40,7 +40,7 @@ class UserApi extends UserRepository {
   }
 
   @override
-  Future<Either<UserApiException, User>> getUserById(int userId) async {
+  Future<Either<UserApiException, UserModel>> getUserById(int userId) async {
     try {
       final response = await http.get(
         Uri.parse('${Environment.apiUrl}/users/$userId'),
@@ -48,7 +48,7 @@ class UserApi extends UserRepository {
       );
       if (response.statusCode == 200) {
         dynamic data = json.decode(response.body);
-        User user = User.fromJson(data);
+        UserModel user = UserModel.fromJson(data);
         return Right(user);
       } else {
         return Left(
@@ -61,7 +61,7 @@ class UserApi extends UserRepository {
   }
 
   @override
-  Future<Either<UserApiException, int>> addUser(User user) async {
+  Future<Either<UserApiException, int>> addUser(UserModel user) async {
     try {
       final body = jsonEncode(user);
       final response = await http.post(
@@ -84,7 +84,7 @@ class UserApi extends UserRepository {
   }
 
   @override
-  Future<Either<UserApiException, User>> deleteUser(int userId) async {
+  Future<Either<UserApiException, UserModel>> deleteUser(int userId) async {
     try {
       final response = await http.delete(
         Uri.parse('${Environment.apiUrl}/users/$userId'),
@@ -92,7 +92,7 @@ class UserApi extends UserRepository {
       );
       if (response.statusCode == 200) {
         dynamic data = json.decode(response.body);
-        User product = User.fromJson(data);
+        UserModel product = UserModel.fromJson(data);
         return Right(product);
       } else {
         return Left(
@@ -105,7 +105,7 @@ class UserApi extends UserRepository {
   }
 
   @override
-  Future<Either<UserApiException, User>> updateUser(User user) async {
+  Future<Either<UserApiException, UserModel>> updateUser(UserModel user) async {
     try {
       final body = jsonEncode(user);
       final response = await http.put(
@@ -116,7 +116,7 @@ class UserApi extends UserRepository {
 
       if (response.statusCode == 200) {
         dynamic data = json.decode(response.body);
-        User products = User.fromJson(data);
+        UserModel products = UserModel.fromJson(data);
         return Right(products);
       } else {
         return Left(

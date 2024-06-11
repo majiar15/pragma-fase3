@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class Product {
-    int id;
+class ProductModel {
+    int? id;
     String title;
     double price;
     String description;
@@ -9,8 +9,8 @@ class Product {
     String image;
     Rating? rating;
 
-    Product({
-        required this.id,
+    ProductModel({
+        this.id,
         required this.title,
         required this.price,
         required this.description,
@@ -19,7 +19,7 @@ class Product {
         this.rating,
     });
 
-    Product copyWith({
+    ProductModel copyWith({
         int? id,
         String? title,
         double? price,
@@ -28,7 +28,7 @@ class Product {
         String? image,
         Rating? rating,
     }) => 
-        Product(
+        ProductModel(
             id: id ?? this.id,
             title: title ?? this.title,
             price: price ?? this.price,
@@ -38,11 +38,11 @@ class Product {
             rating: rating ?? this.rating,
         );
 
-    factory Product.fromRawJson(String str) => Product.fromJson(json.decode(str));
+    factory ProductModel.fromRawJson(String str) => ProductModel.fromJson(json.decode(str));
 
     String toRawJson() => json.encode(toJson());
 
-    factory Product.fromJson(Map<String, dynamic> json) => Product(
+    factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
         title: json["title"],
         price: json["price"]?.toDouble(),
@@ -52,8 +52,8 @@ class Product {
         rating: Rating.fromJson(json["rating"] ?? {}),
     );
 
-    static List<Product> fromJsonList(List<dynamic> jsonList) {
-      return jsonList.map((json) => Product.fromJson(json)).toList();
+    static List<ProductModel> fromJsonList(List<dynamic> jsonList) {
+      return jsonList.map((json) => ProductModel.fromJson(json)).toList();
     }
 
     Map<String, dynamic> toJson() => {

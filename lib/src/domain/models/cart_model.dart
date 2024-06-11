@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-class Cart {
+class CartModel {
     int id;
     int userId;
     DateTime date;
     List<ProductCart> products;
     int v;
 
-    Cart({
+    CartModel({
         required this.id,
         required this.userId,
         required this.date,
@@ -15,14 +15,14 @@ class Cart {
         required this.v,
     });
 
-    Cart copyWith({
+    CartModel copyWith({
         int? id,
         int? userId,
         DateTime? date,
         List<ProductCart>? products,
         int? v,
     }) => 
-        Cart(
+        CartModel(
             id: id ?? this.id,
             userId: userId ?? this.userId,
             date: date ?? this.date,
@@ -30,15 +30,15 @@ class Cart {
             v: v ?? this.v,
         );
 
-    factory Cart.fromJson(str) => Cart.fromMap(str);
+    factory CartModel.fromJson(str) => CartModel.fromMap(str);
 
     String toJson() => json.encode(toMap());
 
-    static List<Cart> fromJsonList(List<dynamic> jsonList) {
-      return jsonList.map((json) => Cart.fromJson(json)).toList();
+    static List<CartModel> fromJsonList(List<dynamic> jsonList) {
+      return jsonList.map((json) => CartModel.fromJson(json)).toList();
     }
 
-    factory Cart.fromMap(json) => Cart(
+    factory CartModel.fromMap(json) => CartModel(
         id: json["id"],
         userId: json["userId"],
         date: DateTime.parse(json["date"]),

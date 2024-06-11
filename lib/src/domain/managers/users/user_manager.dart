@@ -2,54 +2,42 @@
 import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
 import 'package:api_fake_storage_orm/src/data/api/user/error/user_exception.dart';
 import 'package:api_fake_storage_orm/src/data/api/user/user_api.dart';
-import 'package:api_fake_storage_orm/src/domain/models/user.dart';
+import 'package:api_fake_storage_orm/src/domain/models/user_model.dart';
 import 'package:api_fake_storage_orm/src/domain/repositories/user_repository.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/user/add_user_use_case.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/user/delete_user_use_case.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/user/get_all_users_use_case.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/user/get_one_user_use_case.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/user/update_user_use_case.dart';
+import 'package:api_fake_storage_orm/src/domain/use_cases/user/user_use_case.dart';
 import 'package:dartz/dartz.dart';
 
 class UserManager {
   final UserRepository _userRepository = UserApi();
 
-  late final GetAllUsersUseCase _getAllUsersUseCase;
-  late final GetOneUsersUseCase _getOneUserUseCase;
-  late final AddUsersUseCase _addUserUseCase;
-  late final DeleteUsersUseCase _deleteUserUseCase;
-  late final UpdateUsersUseCase _updateUserUseCase;
+  late final UserUseCase _userUseCase;
 
   UserManager() {
-    _getAllUsersUseCase = GetAllUsersUseCase(_userRepository);
-    _getOneUserUseCase = GetOneUsersUseCase(_userRepository);
-    _addUserUseCase = AddUsersUseCase(_userRepository);
-    _deleteUserUseCase = DeleteUsersUseCase(_userRepository);
-    _updateUserUseCase = UpdateUsersUseCase(_userRepository);
+    _userUseCase = UserUseCase(_userRepository);
   }
 
-  Future<List<User>> getAll({Sort? sort, int? limit}) async {
-    final usersEither = await _getAllUsersUseCase(sort, limit);
+  Future<List<UserModel>> getAll({Sort? sort, int? limit}) async {
+    final usersEither = await _userUseCase.getAllUsers(sort, limit);
     return usersEither.fold((l) => throw UserApiException(l.message), (r) => r);
   }
 
-  Future<User> getOne(int userId) async {
-    final usersEither = await _getOneUserUseCase(userId);
+  Future<UserModel> getOne(int userId) async {
+    final usersEither = await _userUseCase.getOneUser(userId);
     return usersEither.fold((l) => throw UserApiException(l.message), (r) => r);
   }
 
-  Future<int> create(User user) async {
-    final usersEither = await _addUserUseCase(user);
+  Future<int> create(UserModel user) async {
+    final usersEither = await _userUseCase.addUser(user);
     return usersEither.fold((l) => throw UserApiException(l.message), (r) => r);
   }
 
-  Future<User> delete(int userId) async {
-    final usersEither = await _deleteUserUseCase(userId);
+  Future<UserModel> delete(int userId) async {
+    final usersEither = await _userUseCase.deleteUser(userId);
     return usersEither.fold((l) => throw UserApiException(l.message), (r) => r);
   }
 
-  Future<User> update(User user) async {
-    final usersEither = await _updateUserUseCase(user);
+  Future<UserModel> update(UserModel user) async {
+    final usersEither = await _userUseCase.updateUser(user);
     return usersEither.fold((l) => throw UserApiException(l.message), (r) => r);
   }
 
