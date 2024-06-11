@@ -1,4 +1,5 @@
 
+import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
 import 'package:api_fake_storage_orm/src/data/api/user/error/user_exception.dart';
 import 'package:api_fake_storage_orm/src/data/api/user/user_api.dart';
 import 'package:api_fake_storage_orm/src/domain/models/user.dart';
@@ -27,8 +28,8 @@ class UserManager {
     _updateUserUseCase = UpdateUsersUseCase(_userRepository);
   }
 
-  Future<List<User>> getAll() async {
-    final usersEither = await _getAllUsersUseCase();
+  Future<List<User>> getAll({Sort? sort, int? limit}) async {
+    final usersEither = await _getAllUsersUseCase(sort, limit);
     return usersEither.fold((l) => throw UserApiException(l.message), (r) => r);
   }
 

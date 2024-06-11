@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
+import 'package:api_fake_storage_orm/src/common/utils/add_parameter_url.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:api_fake_storage_orm/src/common/config/environment.dart';
@@ -66,10 +68,14 @@ class CartApi extends CartRepository {
   }
 
   @override
-  Future<Either<CartApiException, List<Cart>>> getAllCarts() async {
+  Future<Either<CartApiException, List<Cart>>> getAllCarts(Sort? sort, int? limit) async {
     try {
+      String url = '${Environment.apiUrl}/carts';
+      url = AddParametersURL.addSortToUrl(url, sort);
+      url = AddParametersURL.addLimitToUrl(url, limit);
+
       final response = await http.get(
-        Uri.parse('${Environment.apiUrl}/carts'),
+        Uri.parse(url),
         headers: headers,
       );
       if (response.statusCode == 200) {

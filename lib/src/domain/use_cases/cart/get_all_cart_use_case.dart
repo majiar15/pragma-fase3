@@ -1,3 +1,4 @@
+import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
 import 'package:api_fake_storage_orm/src/domain/models/cart.dart';
 import 'package:dartz/dartz.dart';
 
@@ -9,6 +10,6 @@ class GetAllCartUseCase {
 
   GetAllCartUseCase(this.cartRepository);
 
-  Future<Either<CartApiException, List<Cart>>> call() =>
-      cartRepository.getAllCarts();
+  Future<Either<CartApiException, List<Cart>>> call(Sort? sort, int? limit) =>
+      cartRepository.getAllCarts(sort, limit);
 }

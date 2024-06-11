@@ -5,8 +5,8 @@ void main() async {
 
   try {
 
-    final result = await client.category.getAll();
-    print(result);
+    final result = await client.user.getAll(limit: 3, sort: Sort.asc);
+    result.forEach((e) => print(e.name.firstname));
   } catch (e) {
     print(e);
   }

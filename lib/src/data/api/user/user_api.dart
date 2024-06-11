@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
 import 'package:api_fake_storage_orm/src/common/config/environment.dart';
+import 'package:api_fake_storage_orm/src/common/utils/add_parameter_url.dart';
 import 'package:api_fake_storage_orm/src/data/api/user/error/user_exception.dart';
 import 'package:api_fake_storage_orm/src/data/api/user/error/user_not_found_exception.dart';
 import 'package:dartz/dartz.dart';
@@ -13,10 +15,14 @@ class UserApi extends UserRepository {
   final headers = {'Content-Type': 'application/json'};
 
   @override
-  Future<Either<UserApiException, List<User>>> getAllUsers() async {
+  Future<Either<UserApiException, List<User>>> getAllUsers(Sort? sort, int? limit) async {
     try {
+      String url = '${Environment.apiUrl}/users';
+      url = AddParametersURL.addSortToUrl(url, sort);
+      url = AddParametersURL.addLimitToUrl(url, limit);
+
       final response = await http.get(
-        Uri.parse('${Environment.apiUrl}/users'),
+        Uri.parse(url),
         headers: headers,
       );
       if (response.statusCode == 200) {

@@ -1,3 +1,4 @@
+import 'package:api_fake_storage_orm/src/common/enum/sort.dart';
 import 'package:api_fake_storage_orm/src/data/api/product/errors/product_exception.dart';
 import 'package:api_fake_storage_orm/src/domain/models/product.dart';
 import 'package:api_fake_storage_orm/src/domain/repositories/product_repository.dart';
@@ -9,6 +10,6 @@ class GetAllProductsUseCase {
 
   GetAllProductsUseCase(this.productRepository);
 
-  Future<Either<ProductApiException, List<Product>>> call() => productRepository.getAllProducts();
+  Future<Either<ProductApiException, List<Product>>> call(Sort? sort, int? limit) => productRepository.getAllProducts(sort, limit);
 
 }

@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:api_fake_storage_orm/src/common/config/environment.dart';
+import 'package:api_fake_storage_orm/src/common/enum/sort.dart';
+import 'package:api_fake_storage_orm/src/common/utils/add_parameter_url.dart';
 import 'package:api_fake_storage_orm/src/data/api/product/errors/product_exception.dart';
 import 'package:api_fake_storage_orm/src/data/api/product/errors/product_not_found_exception.dart';
 import 'package:dartz/dartz.dart';
@@ -13,10 +15,14 @@ class ProductApi extends ProductRepository {
   final headers = {'Content-Type': 'application/json'};
 
   @override
-  Future<Either<ProductApiException, List<Product>>> getAllProducts() async {
+  Future<Either<ProductApiException, List<Product>>> getAllProducts(Sort? sort, int? limit) async {
     try {
+      String url = '${Environment.apiUrl}/products';
+      url = AddParametersURL.addSortToUrl(url, sort);
+      url = AddParametersURL.addLimitToUrl(url, limit);
+
       final response = await http
-          .get(Uri.parse('${Environment.apiUrl}/products'), headers: headers);
+          .get(Uri.parse(url), headers: headers);
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
         List<Product> products = Product.fromJsonList(data);

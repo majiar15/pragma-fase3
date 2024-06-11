@@ -29,8 +29,8 @@ class CartManager {
     _updateCartUseCase = UpdateCartUseCase(_cartRepository);
   }
 
-  Future<List<Cart>> getAll() async {
-    final cartEither = await _getAllCartsUseCase();
+  Future<List<Cart>> getAll({Sort? sort, int? limit}) async {
+    final cartEither = await _getAllCartsUseCase(sort, limit);
     return cartEither.fold((l) => throw CartApiException(l.message), (r) => r);
   }
 

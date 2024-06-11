@@ -1,3 +1,4 @@
+import 'package:api_fake_storage_orm/src/common/enum/sort.dart';
 import 'package:api_fake_storage_orm/src/data/api/product/errors/product_exception.dart';
 import 'package:api_fake_storage_orm/src/data/api/product/product_api.dart';
 import 'package:api_fake_storage_orm/src/domain/models/product.dart';
@@ -29,8 +30,8 @@ class ProductManager {
     _updateProductUseCase = UpdateProductUseCase(_productRepository);
   }
 
-  Future<List<Product>> getAll() async {
-    final productsEither = await _getAllProductsUseCase();
+  Future<List<Product>> getAll({Sort? sort, int? limit}) async {
+    final productsEither = await _getAllProductsUseCase(sort, limit);
     return productsEither.fold((l) => throw ProductApiException(l.message), (r) => r);
   }
 

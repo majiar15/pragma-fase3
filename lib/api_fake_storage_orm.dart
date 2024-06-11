@@ -11,6 +11,10 @@ export './src/domain/models/product.dart' show Product, Rating;
 export './src/domain/models/cart.dart' show Cart, ProductCart;
 export './src/domain/models/user.dart' show User, Name, Address, Geolocation;
 
+// export utils
+
+export './src/common/enum/sort.dart' show Sort;
+
 class ApiFakeStorageORM {
   ProductManager product;
   UserManager user;
