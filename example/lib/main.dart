@@ -1,9 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
 
-void main() async {
+void main() {
   runApp(const MyApp());
 }
 
@@ -13,70 +11,73 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Fake Storage ORM Example',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'ApiFakeStorage demo'),
+      home: const UserDetailScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
 
-  final String title;
+class UserDetailScreen extends StatefulWidget {
+  const UserDetailScreen({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  createState() => _UserDetailScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  List<UserModel> users = [];
-  int id = 1;
 
-  void _getUserPeriodic(){
-    Timer.periodic(
-      const Duration(seconds: 2),
-      (timer) async {
-        try {
-          final client = ApiFakeStorageORM();
-          final usersResp = await client.user.getOne(id);
+class _UserDetailScreenState extends State<UserDetailScreen> {
+  late Future<UserModel> userFuture;  // Future que contendrá los datos del usuario
+  final int userId = 1;  // ID de usuario de ejemplo
 
-          setState(() {
-            users.add(usersResp);
-            id++;
-          });
-        } catch (e) {
-          timer.cancel();
-        }
-
-      }
-    );
-
-  }
   @override
   void initState() {
     super.initState();
-    _getUserPeriodic();
+    // Inicializamos el cliente de la API
+    final client = ApiFakeStorageORM();
+    // realizamos consulta para obtener usuario con ID 1
+    userFuture = client.user.getOne(userId);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('User Details'),
       ),
-      body: ListView.builder(
-        itemCount: users.length,
-        itemBuilder: (context, index) {
-          final user = users[index];
-          return ListTile(
-            title: Text(user.email),
-            subtitle: Text(user.name.firstname),
-          );
+      body: FutureBuilder<UserModel>(
+        future: userFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          }
+          else if (snapshot.hasData) {
+            final user = snapshot.data!;
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('ID: ${user.id}', style: const TextStyle(fontSize: 20)),
+                  const SizedBox(height: 8),
+                  Text('Name: ${user.name}', style: const TextStyle(fontSize: 20)),
+                  const SizedBox(height: 8),
+                  Text('Email: ${user.email}', style: const TextStyle(fontSize: 20)),
+                ],
+              ),
+            );
+          }
+          else {
+            return const Center(child: Text('No user found'));
+          }
         },
-      )
+      ),
     );
   }
 }
