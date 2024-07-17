@@ -1,8 +1,8 @@
 import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
 import 'package:api_fake_storage_orm/src/data/api/product/errors/product_exception.dart';
-import 'package:api_fake_storage_orm/src/domain/models/product_model.dart';
 import 'package:api_fake_storage_orm/src/domain/repositories/product_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter_models_commons/flutter_models_commons.dart';
 
 class ProductUseCase {
   final ProductRepository _productRepository;

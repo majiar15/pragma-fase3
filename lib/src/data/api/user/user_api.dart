@@ -8,7 +8,7 @@ import 'package:api_fake_storage_orm/src/data/api/user/error/user_not_found_exce
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../domain/models/user_model.dart';
+import 'package:flutter_models_commons/flutter_models_commons.dart';
 import '../../../domain/repositories/user_repository.dart';
 
 class UserApi extends UserRepository {

@@ -1,14 +1,13 @@
 import 'dart:convert';
+import 'package:dartz/dartz.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_models_commons/flutter_models_commons.dart';
 
 import 'package:api_fake_storage_orm/src/common/config/environment.dart';
 import 'package:api_fake_storage_orm/src/common/enum/sort.dart';
 import 'package:api_fake_storage_orm/src/common/utils/add_parameter_url.dart';
 import 'package:api_fake_storage_orm/src/data/api/product/errors/product_exception.dart';
 import 'package:api_fake_storage_orm/src/data/api/product/errors/product_not_found_exception.dart';
-import 'package:dartz/dartz.dart';
-import 'package:http/http.dart' as http;
-
-import '../../../domain/models/product_model.dart';
 import '../../../domain/repositories/product_repository.dart';
 
 class ProductApi extends ProductRepository {

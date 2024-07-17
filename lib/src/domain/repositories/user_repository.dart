@@ -2,7 +2,8 @@ import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
 import 'package:api_fake_storage_orm/src/data/api/user/error/user_exception.dart';
 import 'package:dartz/dartz.dart';
 
-import '../models/user_model.dart';
+
+import 'package:flutter_models_commons/flutter_models_commons.dart';
 
 abstract class UserRepository {
 

@@ -2,7 +2,8 @@ import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
 import 'package:dartz/dartz.dart';
 
 import 'package:api_fake_storage_orm/src/data/api/cart/error/cart_exception.dart';
-import 'package:api_fake_storage_orm/src/domain/models/cart_model.dart';
+import 'package:flutter_models_commons/flutter_models_commons.dart' show ProductCartApi, CartApiModel;
+
 import 'package:api_fake_storage_orm/src/domain/repositories/cart_repository.dart';
 
 class CartUseCase {
@@ -10,25 +11,25 @@ class CartUseCase {
 
   CartUseCase(this._cartRepository);
 
-  Future<Either<CartApiException, int>> addCart(int userId, List<ProductCart> products) =>
+  Future<Either<CartApiException, int>> addCart(int userId, List<ProductCartApi> products) =>
       _cartRepository.addCart(userId,products);
 
-  Future<Either<CartApiException, CartModel>> deleteCart(int cartId) =>
+  Future<Either<CartApiException, CartApiModel>> deleteCart(int cartId) =>
       _cartRepository.deleteCart(cartId);
 
-  Future<Either<CartApiException, List<CartModel>>> getAll(Sort? sort, int? limit) =>
+  Future<Either<CartApiException, List<CartApiModel>>> getAll(Sort? sort, int? limit) =>
       _cartRepository.getAllCarts(sort, limit);
 
-  Future<Either<CartApiException, CartModel>> getCartByUser(int userId) =>
+  Future<Either<CartApiException, CartApiModel>> getCartByUser(int userId) =>
       _cartRepository.getCartByUserId(userId);
 
-  Future<Either<CartApiException, CartModel>> getOne(int cartId) =>
+  Future<Either<CartApiException, CartApiModel>> getOne(int cartId) =>
       _cartRepository.getCartById(cartId);
 
   Future<Either<CartApiException, int>> updateCart(
     int cartId,
     int userId,
-    List<ProductCart> products,
+    List<ProductCartApi> products,
   ) =>
       _cartRepository.updateProductsCart(cartId, userId, products);
 }
