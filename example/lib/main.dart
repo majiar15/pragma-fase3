@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
-
+import 'package:api_fake_store_orm/api_fake_store_orm.dart';
+import 'package:flutter_models_commons/flutter_models_commons.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -66,7 +66,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                 children: [
                   Text('ID: ${user.id}', style: const TextStyle(fontSize: 20)),
                   const SizedBox(height: 8),
-                  Text('Name: ${user.name}', style: const TextStyle(fontSize: 20)),
+                  Text('Name: ${user.name.firstname}', style: const TextStyle(fontSize: 20)),
                   const SizedBox(height: 8),
                   Text('Email: ${user.email}', style: const TextStyle(fontSize: 20)),
                 ],

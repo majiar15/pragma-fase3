@@ -1,14 +1,14 @@
 import 'dart:convert';
-import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
-import 'package:api_fake_storage_orm/src/common/utils/add_parameter_url.dart';
+import 'package:api_fake_store_orm/api_fake_store_orm.dart';
+import 'package:api_fake_store_orm/src/common/utils/add_parameter_url.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_models_commons/flutter_models_commons.dart' show ProductCartApi, CartApiModel;
 
-import 'package:api_fake_storage_orm/src/common/config/environment.dart';
-import 'package:api_fake_storage_orm/src/common/utils/formatted_date.dart';
-import 'package:api_fake_storage_orm/src/data/api/cart/error/cart_exception.dart';
-import 'package:api_fake_storage_orm/src/data/api/cart/error/cart_not_found_exception.dart';
-import 'package:api_fake_storage_orm/src/domain/models/cart_model.dart';
-import 'package:api_fake_storage_orm/src/domain/repositories/cart_repository.dart';
+import 'package:api_fake_store_orm/src/common/config/environment.dart';
+import 'package:api_fake_store_orm/src/common/utils/formatted_date.dart';
+import 'package:api_fake_store_orm/src/data/api/cart/error/cart_exception.dart';
+import 'package:api_fake_store_orm/src/data/api/cart/error/cart_not_found_exception.dart';
+import 'package:api_fake_store_orm/src/domain/repositories/cart_repository.dart';
 
 import 'package:dartz/dartz.dart';
 
@@ -18,7 +18,7 @@ class CartApi extends CartRepository {
   @override
   Future<Either<CartApiException, int>> addCart(
     int userId,
-    List<ProductCart> products,
+    List<ProductCartApi> products,
   ) async {
     try {
       DateTime now = DateTime.now();
@@ -47,7 +47,7 @@ class CartApi extends CartRepository {
   }
 
   @override
-  Future<Either<CartApiException, CartModel>> deleteCart(int cartId) async {
+  Future<Either<CartApiException, CartApiModel>> deleteCart(int cartId) async {
     try {
       final response = await http.delete(
         Uri.parse('${Environment.apiUrl}/carts/$cartId'),
@@ -55,7 +55,7 @@ class CartApi extends CartRepository {
       );
       if (response.statusCode == 200) {
         dynamic data = json.decode(response.body);
-        CartModel cart = CartModel.fromJson(data);
+        CartApiModel cart = CartApiModel.fromJson(data);
         return Right(cart);
       } else {
         return Left(
@@ -68,7 +68,7 @@ class CartApi extends CartRepository {
   }
 
   @override
-  Future<Either<CartApiException, List<CartModel>>> getAllCarts(Sort? sort, int? limit) async {
+  Future<Either<CartApiException, List<CartApiModel>>> getAllCarts(Sort? sort, int? limit) async {
     try {
       String url = '${Environment.apiUrl}/carts';
       url = AddParametersURL.addSortToUrl(url, sort);
@@ -80,7 +80,7 @@ class CartApi extends CartRepository {
       );
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-        List<CartModel> carts = CartModel.fromJsonList(data);
+        List<CartApiModel> carts = CartApiModel.fromJsonList(data);
         return Right(carts);
       } else {
         return Left(
@@ -93,7 +93,7 @@ class CartApi extends CartRepository {
   }
 
   @override
-  Future<Either<CartApiException, CartModel>> getCartById(int cartId) async {
+  Future<Either<CartApiException, CartApiModel>> getCartById(int cartId) async {
     try {
       final response = await http.get(
         Uri.parse('${Environment.apiUrl}/carts/$cartId'),
@@ -101,7 +101,7 @@ class CartApi extends CartRepository {
       );
       if (response.statusCode == 200) {
         dynamic data = json.decode(response.body);
-        CartModel cart = CartModel.fromJson(data);
+        CartApiModel cart = CartApiModel.fromJson(data);
         return Right(cart);
       } else {
         return Left(
@@ -114,7 +114,7 @@ class CartApi extends CartRepository {
   }
 
   @override
-  Future<Either<CartApiException, CartModel>> getCartByUserId(int userId) async {
+  Future<Either<CartApiException, CartApiModel>> getCartByUserId(int userId) async {
     try {
       final response = await http.get(
         Uri.parse('${Environment.apiUrl}/carts/user/$userId'),
@@ -122,7 +122,7 @@ class CartApi extends CartRepository {
       );
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-        CartModel cart = CartModel.fromJsonList(data)[0];
+        CartApiModel cart = CartApiModel.fromJsonList(data)[0];
         return Right(cart);
       } else {
         return Left(
@@ -138,7 +138,7 @@ class CartApi extends CartRepository {
   Future<Either<CartApiException, int>> updateProductsCart(
     int cartId,
     int userId,
-    List<ProductCart> products,
+    List<ProductCartApi> products,
   ) async {
     try {
       DateTime now = DateTime.now();

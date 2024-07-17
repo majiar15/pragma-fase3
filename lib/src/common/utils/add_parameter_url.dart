@@ -1,4 +1,4 @@
-import 'package:api_fake_storage_orm/src/common/enum/sort.dart';
+import 'package:api_fake_store_orm/src/common/enum/sort.dart';
 
 class AddParametersURL {
 

@@ -1,7 +1,7 @@
-import 'package:api_fake_storage_orm/src/data/api/auth/auth_api.dart';
-import 'package:api_fake_storage_orm/src/data/api/product/errors/product_exception.dart';
-import 'package:api_fake_storage_orm/src/domain/repositories/auth_repository.dart';
-import 'package:api_fake_storage_orm/src/domain/use_cases/auth/auth_use_case.dart';
+import 'package:api_fake_store_orm/src/data/api/auth/auth_api.dart';
+import 'package:api_fake_store_orm/src/data/api/product/errors/product_exception.dart';
+import 'package:api_fake_store_orm/src/domain/repositories/auth_repository.dart';
+import 'package:api_fake_store_orm/src/domain/use_cases/auth/auth_use_case.dart';
 import 'package:dartz/dartz.dart';
 
 class AuthManager {

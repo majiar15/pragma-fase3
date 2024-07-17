@@ -1,4 +1,4 @@
-name: api_fake_storage_orm
+name: api_fake_store_orm
 description: A new Flutter package project.
 version: 0.0.1
 homepage:
@@ -12,6 +12,10 @@ dependencies:
     sdk: flutter
   dartz: ^0.10.1
   http: ^0.13.6
+  flutter_models_commons:
+    git:
+      url: https://github.com/majiar15/pragma-commons-models.git
+      branch: main
 
 dev_dependencies:
   flutter_test:
