@@ -1,10 +1,10 @@
-library api_fake_store_orm;
+library api_fake_storage_orm;
 
-import 'package:api_fake_store_orm/src/domain/managers/auth/auth_manager.dart';
-import 'package:api_fake_store_orm/src/domain/managers/cart/cart_manager.dart';
-import 'package:api_fake_store_orm/src/domain/managers/category/category_manager.dart';
-import 'package:api_fake_store_orm/src/domain/managers/product/product_manager.dart';
-import 'package:api_fake_store_orm/src/domain/managers/users/user_manager.dart';
+import 'package:api_fake_storage_orm/src/domain/managers/auth/auth_manager.dart';
+import 'package:api_fake_storage_orm/src/domain/managers/cart/cart_manager.dart';
+import 'package:api_fake_storage_orm/src/domain/managers/category/category_manager.dart';
+import 'package:api_fake_storage_orm/src/domain/managers/product/product_manager.dart';
+import 'package:api_fake_storage_orm/src/domain/managers/users/user_manager.dart';
 
 
 // export utils

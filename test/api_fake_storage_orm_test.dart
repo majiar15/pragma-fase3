@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:api_fake_store_orm/api_fake_store_orm.dart';
+import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
 
 void main() {
   test('adds one to input values', () {

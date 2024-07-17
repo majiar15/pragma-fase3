@@ -1,10 +1,10 @@
 import 'package:flutter_models_commons/flutter_models_commons.dart';
 import 'package:dartz/dartz.dart';
-import 'package:api_fake_store_orm/src/common/enum/sort.dart';
-import 'package:api_fake_store_orm/src/data/api/product/errors/product_exception.dart';
-import 'package:api_fake_store_orm/src/data/api/product/product_api.dart';
-import 'package:api_fake_store_orm/src/domain/repositories/product_repository.dart';
-import 'package:api_fake_store_orm/src/domain/use_cases/product/product_use_case.dart';
+import 'package:api_fake_storage_orm/src/common/enum/sort.dart';
+import 'package:api_fake_storage_orm/src/data/api/product/errors/product_exception.dart';
+import 'package:api_fake_storage_orm/src/data/api/product/product_api.dart';
+import 'package:api_fake_storage_orm/src/domain/repositories/product_repository.dart';
+import 'package:api_fake_storage_orm/src/domain/use_cases/product/product_use_case.dart';
 
 class ProductManager {
   final ProductRepository _productRepository = ProductApi();

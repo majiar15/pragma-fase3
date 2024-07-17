@@ -14,7 +14,7 @@ Fake Storage ORM es un paquete ORM (Object-Relational Mapping) para Flutter que 
 ### Instalación
 
 ```yml
-api_fake_store_orm:
+api_fake_storage_orm:
   git:
     url: https://github.com/majiar15/pragma-fase3.git
     branch: main
@@ -23,7 +23,7 @@ api_fake_store_orm:
 ### Ejemplo
 
 ```dart
-import 'package:api_fake_store_orm/api_fake_store_orm.dart';
+import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
 
 void main() async {
   final client = ApiFakeStorageORM();

@@ -1,5 +1,5 @@
-import 'package:api_fake_store_orm/api_fake_store_orm.dart';
-import 'package:api_fake_store_orm/src/data/api/user/error/user_exception.dart';
+import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
+import 'package:api_fake_storage_orm/src/data/api/user/error/user_exception.dart';
 import 'package:dartz/dartz.dart';
 
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
 export "FLUTTER_ROOT=/Users/admin/development/flutter"
-export "FLUTTER_APPLICATION_PATH=/Users/admin/development/pragma/api_fake_store_orm"
+export "FLUTTER_APPLICATION_PATH=/Users/admin/development/pragma/api_fake_storage_orm"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=0.0.1"

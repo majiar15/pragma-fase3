@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:api_fake_store_orm/api_fake_store_orm.dart';
+import 'package:api_fake_store_orm/api_fake_storage_orm.dart';
 import 'package:flutter_models_commons/flutter_models_commons.dart';
 void main() {
   runApp(const MyApp());
