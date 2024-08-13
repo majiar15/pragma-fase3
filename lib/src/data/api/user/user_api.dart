@@ -13,6 +13,9 @@ import '../../../domain/repositories/user_repository.dart';
 
 class UserApi extends UserRepository {
   final headers = {'Content-Type': 'application/json'};
+  final http.Client client;
+
+  UserApi({http.Client? client}) : client = client ?? http.Client();
 
   @override
   Future<Either<UserApiException, List<UserModel>>> getAllUsers(Sort? sort, int? limit) async {
@@ -21,7 +24,7 @@ class UserApi extends UserRepository {
       url = AddParametersURL.addSortToUrl(url, sort);
       url = AddParametersURL.addLimitToUrl(url, limit);
 
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse(url),
         headers: headers,
       );
@@ -42,7 +45,7 @@ class UserApi extends UserRepository {
   @override
   Future<Either<UserApiException, UserModel>> getUserById(int userId) async {
     try {
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse('${Environment.apiUrl}/users/$userId'),
         headers: headers,
       );
@@ -64,7 +67,7 @@ class UserApi extends UserRepository {
   Future<Either<UserApiException, int>> addUser(UserModel user) async {
     try {
       final body = jsonEncode(user);
-      final response = await http.post(
+      final response = await client.post(
         Uri.parse('${Environment.apiUrl}/users'),
         headers: headers,
         body: body,
@@ -86,7 +89,7 @@ class UserApi extends UserRepository {
   @override
   Future<Either<UserApiException, UserModel>> deleteUser(int userId) async {
     try {
-      final response = await http.delete(
+      final response = await client.delete(
         Uri.parse('${Environment.apiUrl}/users/$userId'),
         headers: headers,
       );
@@ -108,7 +111,7 @@ class UserApi extends UserRepository {
   Future<Either<UserApiException, UserModel>> updateUser(UserModel user) async {
     try {
       final body = jsonEncode(user);
-      final response = await http.put(
+      final response = await client.put(
         Uri.parse('${Environment.apiUrl}/users/${user.id}'),
         body: body,
         headers: headers,

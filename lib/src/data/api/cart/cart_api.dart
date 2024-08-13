@@ -14,6 +14,9 @@ import 'package:dartz/dartz.dart';
 
 class CartApi extends CartRepository {
   final headers = {'Content-Type': 'application/json'};
+  final http.Client client;
+
+  CartApi({http.Client? client}) : client = client ?? http.Client();
 
   @override
   Future<Either<CartApiException, int>> addCart(
@@ -27,7 +30,7 @@ class CartApi extends CartRepository {
         "products": products,
         "date": FormattedDate.format(now)
       });
-      final response = await http.post(
+      final response = await client.post(
         Uri.parse('${Environment.apiUrl}/carts'),
         headers: headers,
         body: body,
@@ -49,7 +52,7 @@ class CartApi extends CartRepository {
   @override
   Future<Either<CartApiException, CartApiModel>> deleteCart(int cartId) async {
     try {
-      final response = await http.delete(
+      final response = await client.delete(
         Uri.parse('${Environment.apiUrl}/carts/$cartId'),
         headers: headers,
       );
@@ -74,7 +77,7 @@ class CartApi extends CartRepository {
       url = AddParametersURL.addSortToUrl(url, sort);
       url = AddParametersURL.addLimitToUrl(url, limit);
 
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse(url),
         headers: headers,
       );
@@ -95,7 +98,7 @@ class CartApi extends CartRepository {
   @override
   Future<Either<CartApiException, CartApiModel>> getCartById(int cartId) async {
     try {
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse('${Environment.apiUrl}/carts/$cartId'),
         headers: headers,
       );
@@ -116,7 +119,7 @@ class CartApi extends CartRepository {
   @override
   Future<Either<CartApiException, CartApiModel>> getCartByUserId(int userId) async {
     try {
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse('${Environment.apiUrl}/carts/user/$userId'),
         headers: headers,
       );
@@ -147,7 +150,7 @@ class CartApi extends CartRepository {
         "products": products,
         "date": FormattedDate.format(now)
       });
-      final response = await http.put(
+      final response = await client.put(
         Uri.parse('${Environment.apiUrl}/carts/$cartId'),
         body: body,
         headers: headers,

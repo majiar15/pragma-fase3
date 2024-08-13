@@ -8,11 +8,14 @@ import 'package:http/http.dart' as http;
 
 class CategoryApi extends CategoryRepository {
   final headers = {'Content-Type': 'application/json'};
+  final http.Client client;
+
+  CategoryApi({http.Client? client}) : client = client ?? http.Client();
 
   @override
   Future<Either<CategoryApiException, List<String>>> getAllCategories() async {
     try {
-      final response = await http.get(
+      final response = await client.get(
         Uri.parse('${Environment.apiUrl}/products/categories'),
         headers: headers,
       );

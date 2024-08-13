@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:api_fake_store_orm/api_fake_storage_orm.dart';
+import 'package:api_fake_storage_orm/api_fake_storage_orm.dart';
 import 'package:flutter_models_commons/flutter_models_commons.dart';
 void main() {
   runApp(const MyApp());
@@ -34,12 +34,15 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
   final int userId = 1;  // ID de usuario de ejemplo
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
-    // Inicializamos el cliente de la API
+    newMethod();
+  }
+
+  Future<void> newMethod() async {
     final client = ApiFakeStorageORM();
-    // realizamos consulta para obtener usuario con ID 1
-    userFuture = client.user.getOne(userId);
+    final result = await client.cart.delete(3);
+    print(result);
   }
 
   @override

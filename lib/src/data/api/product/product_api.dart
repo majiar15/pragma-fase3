@@ -12,6 +12,9 @@ import '../../../domain/repositories/product_repository.dart';
 
 class ProductApi extends ProductRepository {
   final headers = {'Content-Type': 'application/json'};
+  final http.Client client;
+
+  ProductApi({http.Client? client}) : client = client ?? http.Client();
 
   @override
   Future<Either<ProductApiException, List<ProductModel>>> getAllProducts(Sort? sort, int? limit) async {
@@ -20,7 +23,7 @@ class ProductApi extends ProductRepository {
       url = AddParametersURL.addSortToUrl(url, sort);
       url = AddParametersURL.addLimitToUrl(url, limit);
 
-      final response = await http
+      final response = await client
           .get(Uri.parse(url), headers: headers);
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
@@ -40,7 +43,7 @@ class ProductApi extends ProductRepository {
   @override
   Future<Either<ProductApiException, ProductModel>> getProductById(int id) async {
     try {
-      final response = await http.get(
+      final response = await client.get(
           Uri.parse('https://fakestoreapi.com/products/$id'),
           headers: headers);
       if (response.statusCode == 200) {
@@ -62,7 +65,7 @@ class ProductApi extends ProductRepository {
       ProductModel product) async {
     try {
       final body = jsonEncode(product);
-      final response = await http.post(
+      final response = await client.post(
           Uri.parse('${Environment.apiUrl}/products'),
           headers: headers,
           body: body);
@@ -86,7 +89,7 @@ class ProductApi extends ProductRepository {
     int productId,
   ) async {
     try {
-      final response = await http.delete(
+      final response = await client.delete(
           Uri.parse('${Environment.apiUrl}/products/$productId'),
           headers: headers);
       if (response.statusCode == 200) {
@@ -108,7 +111,7 @@ class ProductApi extends ProductRepository {
     String category,
   ) async {
     try {
-      final response = await http.get(
+      final response = await client.get(
           Uri.parse('${Environment.apiUrl}/products/category/$category'),
           headers: headers);
       if (response.statusCode == 200) {
@@ -132,7 +135,7 @@ class ProductApi extends ProductRepository {
   ) async {
     try {
       final body = jsonEncode(product);
-      final response = await http.put(
+      final response = await client.put(
           Uri.parse('${Environment.apiUrl}/products/${product.id}'),
           body: body,
           headers: headers);

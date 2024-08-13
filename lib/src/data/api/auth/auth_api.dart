@@ -8,15 +8,18 @@ import 'package:http/http.dart' as http;
 
 class AuthApi extends AuthRepository {
   final headers = {'Content-Type': 'application/json'};
+  final http.Client client;
+
+  AuthApi({http.Client? client}) : client = client ?? http.Client();
 
   @override
   Future<Either<AuthApiException, String>> login(String userName, String password) async {
     try {
-       final body = jsonEncode({
-          "username": userName,
-          "password": password
-       });
-      final response = await http.post(
+      final body = jsonEncode({
+        "username": userName,
+        "password": password,
+      });
+      final response = await client.post(
         Uri.parse('${Environment.apiUrl}/auth/login'),
         body: body,
         headers: headers,
@@ -26,13 +29,10 @@ class AuthApi extends AuthRepository {
         String token = data["token"];
         return Right(token);
       } else {
-        return Left(
-          AuthApiException('Invalid Credential'),
-        );
+        return Left(AuthApiException('Invalid Credential'));
       }
     } catch (e) {
       return Left(AuthApiException(e.toString()));
     }
   }
-
 }
