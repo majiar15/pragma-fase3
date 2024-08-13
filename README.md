@@ -234,5 +234,12 @@ final result = await client.product.getByCategory('Electronic');
   final result = await client.category.getAll();
   ```
 
+## cobertura
+Se realizaron pruebas de widgets, y se adjunta el informe de cobertura.
+
+![imagen de covertura](/docs/coverage_test.png)
+
+
+
 para mas informacion consultar
 [Api Fake Storage](https://fakestoreapi.com/docs) 
