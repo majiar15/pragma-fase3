@@ -14,7 +14,7 @@ dependencies:
   http: ^0.13.6
   flutter_models_commons:
     git:
-      url: https://github.com/majiar15/pragma-commons-models.git
+      url: https://github.com/majiar15/flutter_models_commons.git
       branch: main
 
 dev_dependencies:
